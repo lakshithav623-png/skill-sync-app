@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKILLSYNC - Student Career Path Recommender</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white font-sans">
+
+    <!-- Header Branding -->
+    <header class="py-5 px-8 border-b border-slate-800 bg-slate-900/60 backdrop-blur flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+            <div class="bg-blue-600 p-2.5 rounded-xl shadow-lg shadow-blue-500/20">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <div>
+                <h1 class="text-xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">SKILLSYNC</h1>
+                <p class="text-xs text-slate-400 font-medium tracking-wide">AI-Powered Skill Guidance & Career Recommender</p>
+            </div>
+        </div>
+        <div id="pageIndicator" class="text-xs font-semibold px-4 py-1.5 rounded-full bg-blue-950 border border-blue-800 text-blue-400">
+            Step 1 of 5: Student Details
+        </div>
+    </header>
+
+    <!-- Main Wizard Container -->
+    <main class="max-w-4xl w-full mx-auto px-4 py-10 flex-grow flex items-center">
+        <div class="w-full bg-slate-900/90 border border-slate-800 rounded-2xl shadow-2xl p-8 backdrop-blur-xl">
+            
+            <!-- STEP 1: Student Information -->
+            <div id="step-1" class="space-y-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-white">Welcome, Engineering Student!</h2>
+                    <p class="text-sm text-slate-400 mt-1">Please enter your academic details to personalize your career recommendation roadmap.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">Full Name</label>
+                        <input type="text" id="name" value="Lakshitha Velmurugan" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">College Name</label>
+                        <input type="text" id="college" value="Manakula Vinayagar Institute of Technology" required class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">Year of Study</label>
+                        <select id="year" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500">
+                            <option value="1st Year">1st Year</option>
+                            <option value="2nd Year">2nd Year</option>
+                            <option value="3rd Year" selected>3rd Year</option>
+                            <option value="4th Year">4th Year</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="pt-4 flex justify-end">
+                    <button type="button" onclick="goToStep(2)" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-3 rounded-xl transition shadow-lg shadow-blue-600/30 flex items-center space-x-2">
+                        <span>Next: Resume & Aptitude Hub</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 2: Side-by-Side Options (Resume Upload/Input vs Aptitude Test Trigger) -->
+            <div id="step-2" class="space-y-6 hidden">
+                <div>
+                    <h2 class="text-2xl font-bold text-white">Choose Action: Resume Analysis or Aptitude Test</h2>
+                    <p class="text-sm text-slate-400 mt-1">Upload your resume/projects to view your gap analysis and course recommendations, or proceed to the aptitude test.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Left: Resume Upload & Input Box -->
+                    <div class="space-y-4 bg-slate-950/60 p-6 rounded-xl border border-slate-800 flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <h3 class="font-bold text-blue-400 text-sm uppercase tracking-wider">📁 Resume & Project Analysis</h3>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-300 mb-1">Department</label>
+                                <select id="department" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500">
+                                    <option value="CSE / IT">CSE / IT (Computer Science)</option>
+                                    <option value="ECE">ECE (Electronics & Communication)</option>
+                                    <option value="MECH">MECH (Mechanical Engineering)</option>
+                                    <option value="CIVIL">CIVIL (Civil Engineering)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-300 mb-1">Upload Resume (PDF)</label>
+                                <input type="file" id="resume" accept=".pdf" class="w-full text-xs text-slate-400 file:mr-2 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-500 cursor-pointer bg-slate-900 border border-slate-700 rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-300 mb-1">Or Input Project Description (Text Box)</label>
+                                <textarea id="project_text" rows="2" placeholder="e.g. Built python script, data structures..." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white focus:outline-none focus:border-blue-500"></textarea>
+                            </div>
+                        </div>
+                        <button type="button" id="analyzeResumeBtn" onclick="submitResumeAnalysis()" class="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold py-3 px-4 rounded-xl transition shadow-lg shadow-blue-600/30 mt-4">
+                            Analyze My Resume ➔
+                        </button>
+                    </div>
+
+                    <!-- Right: Aptitude Test Trigger Option -->
+                    <div class="bg-gradient-to-br from-blue-950/40 to-slate-950 p-6 rounded-xl border border-blue-900/40 flex flex-col justify-between text-center">
+                        <div class="space-y-3 pt-6">
+                            <div class="bg-blue-600/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto border border-blue-500/30">
+                                <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            </div>
+                            <h3 class="font-bold text-white text-lg">Take Aptitude Test</h3>
+                            <p class="text-xs text-slate-400">Test your technical core knowledge with 10 questions and get detailed right/wrong feedback.</p>
+                        </div>
+                        <button type="button" onclick="goToStep(4)" class="w-full bg-slate-800 hover:bg-slate-700 text-blue-400 hover:text-white font-bold py-3 px-4 rounded-xl transition border border-blue-800/50 mt-4">
+                            Start Aptitude Test ➔
+                        </button>
+                    </div>
+                </div>
+
+                <div class="pt-4 flex justify-between">
+                    <button type="button" onclick="goToStep(1)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold px-6 py-3 rounded-xl transition">Back</button>
+                </div>
+            </div>
+
+            <!-- STEP 3: Dedicated Resume Analysis Result Page (Includes Course Recommendations) -->
+            <div id="step-3" class="space-y-6 hidden">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white" id="resume-res-title">Resume Analysis & Recommendations Report</h2>
+                        <p class="text-sm text-slate-400">Evaluated skill gaps and curated YouTube / Coursera / NPTEL upskilling links.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 text-center flex flex-col justify-center">
+                        <div class="text-3xl font-black text-emerald-400" id="res-resume-score">--/100</div>
+                        <div class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-semibold">Resume Match Score</div>
+                    </div>
+                    <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 text-center flex flex-col justify-center">
+                        <div class="text-3xl font-black text-amber-400" id="res-resume-gap">--%</div>
+                        <div class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-semibold">Resume Skill Deficit</div>
+                    </div>
+                    <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 text-center flex flex-col justify-center">
+                        <div class="text-sm font-bold text-blue-400 truncate px-2" id="res-target-company">--</div>
+                        <div class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-semibold">Target Company Match</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3">
+                        <h3 class="font-bold text-white text-sm uppercase tracking-wider text-emerald-400">✓ Detected Matched Skills</h3>
+                        <div id="resumeMatchedSkills" class="flex flex-wrap gap-2 text-xs"></div>
+                    </div>
+                    <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3">
+                        <h3 class="font-bold text-white text-sm uppercase tracking-wider text-amber-400">⚠ Lagging Skill Gaps</h3>
+                        <div id="resumeMissingSkills" class="flex flex-wrap gap-2 text-xs"></div>
+                    </div>
+                </div>
+
+                <!-- Course Recommendations (YouTube / Coursera / NPTEL) under Resume Results -->
+                <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="font-bold text-white text-base flex items-center space-x-2">
+                        <span>🎯 Curated Upskilling Courses (YouTube, Coursera, NPTEL)</span>
+                    </h3>
+                    <div id="recommendationsList" class="space-y-3"></div>
+                </div>
+
+                <div class="pt-4 flex justify-between border-t border-slate-800 items-center">
+                    <button type="button" onclick="goToStep(2)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold px-6 py-3 rounded-xl transition">Back to Options</button>
+                    <button type="button" onclick="goToStep(4)" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-3 rounded-xl transition shadow-lg shadow-blue-600/30 flex items-center space-x-2">
+                        <span>Want to test your skills? Attend the Aptitude Test ➔</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 4: Dedicated Aptitude Test Page (10 Questions, Blank) -->
+            <div id="step-4" class="space-y-6 hidden">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">Technical Aptitude Assessment</h2>
+                        <p class="text-xs text-slate-400">Answer all 10 questions. Your quiz performance will be evaluated on the next page.</p>
+                    </div>
+                    <span class="text-xs bg-amber-950 text-amber-300 px-3 py-1 rounded-full border border-amber-800">10 Questions</span>
+                </div>
+
+                <div id="quizContainer" class="space-y-4 max-h-[400px] overflow-y-auto pr-2 text-xs">
+                    <!-- Injected via JavaScript -->
+                </div>
+
+                <div class="pt-4 flex justify-between border-t border-slate-800">
+                    <button type="button" onclick="goToStep(3)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold px-6 py-3 rounded-xl transition">Back to Resume Report</button>
+                    <button type="button" onclick="submitAptitudeTest()" class="bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-bold px-8 py-3 rounded-xl transition shadow-xl shadow-emerald-600/30">
+                        Submit Aptitude Test & View Results ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 5: Dedicated Aptitude Test Results Page -->
+            <div id="step-5" class="space-y-6 hidden">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white" id="aptitude-res-title">Aptitude Test Results & Answer Key</h2>
+                        <p class="text-sm text-slate-400">Detailed right vs. wrong feedback and combined score rating.</p>
+                    </div>
+                    <button onclick="resetApp()" class="text-xs bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-lg text-slate-300 font-medium transition">New Assessment</button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 text-center flex flex-col justify-center">
+                        <div class="text-3xl font-black text-cyan-400" id="res-quiz-score">--/10</div>
+                        <div class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-semibold">Aptitude Test Score</div>
+                    </div>
+                    <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 text-center flex flex-col justify-center">
+                        <div class="text-3xl font-black text-purple-400" id="res-final-combined">--/100</div>
+                        <div class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-semibold">Combined Employability Rating</div>
+                    </div>
+                </div>
+
+                <!-- Aptitude Quiz Correct/Incorrect Feedback -->
+                <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3">
+                    <h3 class="font-bold text-white text-sm uppercase tracking-wider text-blue-400">📝 Aptitude Answer Key & Feedback (Right vs Wrong)</h3>
+                    <div id="quizFeedbackArea" class="space-y-2 text-xs text-slate-300 max-h-48 overflow-y-auto pr-2"></div>
+                </div>
+
+                <div class="pt-4 flex justify-between border-t border-slate-800">
+                    <button type="button" onclick="goToStep(3)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold px-6 py-3 rounded-xl transition">View Resume Report Again</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 text-center text-xs text-slate-500 border-t border-slate-800">
+        SKILLSYNC Architecture Engine &copy; 2026. All rights reserved.
+    </footer>
+
+    <script>
+        const questions = [
+            { q: "Which data structure operates on a Last-In, First-Out (LIFO) basis?", options: ["Queue", "Stack", "Array"], answer: "Stack" },
+            { q: "Which time complexity represents ideal logarithmic efficiency?", options: ["O(log n)", "O(n^2)", "O(n)"], answer: "O(log n)" },
+            { q: "What does REST stand for in web architecture?", options: ["Remote System Token", "Representational State Transfer", "Reliable Server Transfer"], answer: "Representational State Transfer" },
+            { q: "Which protocol is used to securely browse web pages over encryption?", options: ["HTTP", "HTTPS", "FTP"], answer: "HTTPS" },
+            { q: "What is the primary function of an operating system kernel?", options: ["Design graphics", "Manage hardware & CPU resources", "Compile source code"], answer: "Manage hardware & CPU resources" },
+            { q: "Which keyword is used in Python to define a reusable block of code?", options: ["function", "def", "fun"], answer: "def" },
+            { q: "In SQL, which clause is used to filter records based on a condition?", options: ["SORT BY", "WHERE", "GROUP BY"], answer: "WHERE" },
+            { q: "Which logic gate outputs high only when all inputs are high?", options: ["OR gate", "AND gate", "NOR gate"], answer: "AND gate" },
+            { q: "What is Git primarily utilized for?", options: ["Video editing", "Version control & collaboration", "Database administration"], answer: "Version control & collaboration" },
+            { q: "Which data structure uses FIFO (First-In, First-Out)?", options: ["Queue", "Stack", "Tree"], answer: "Queue" }
+        ];
+
+        let globalResumeData = null;
+        let globalQuizScore = 0;
+
+        const quizContainer = document.getElementById('quizContainer');
+        questions.forEach((item, index) => {
+            let optionsHTML = item.options.map(opt => `
+                <label class="flex items-center space-x-2 cursor-pointer text-slate-300">
+                    <input type="radio" name="q_${index}" value="${opt}" class="text-blue-600">
+                    <span>${opt}</span>
+                </label>
+            `).join('');
+
+            quizContainer.innerHTML += `
+                <div class="bg-slate-900 p-3 rounded-lg border border-slate-800">
+                    <p class="font-medium text-white mb-2 text-xs">${index + 1}. ${item.q}</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">${optionsHTML}</div>
+                </div>
+            `;
+        });
+
+        function goToStep(step) {
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById('step-' + i).classList.add('hidden');
+            }
+            document.getElementById('step-' + step).classList.remove('hidden');
+            const titles = ["Student Details", "Action Hub", "Resume Report", "Aptitude Test", "Aptitude Results"];
+            document.getElementById('pageIndicator').innerText = `Step ${step} of 5: ${titles[step-1]}`;
+        }
+
+        function resetApp() {
+            goToStep(1);
+            document.getElementById('name').value = "Lakshitha Velmurugan";
+            globalResumeData = null;
+            globalQuizScore = 0;
+        }
+
+        async function submitResumeAnalysis() {
+            const btn = document.getElementById('analyzeResumeBtn');
+            btn.innerText = "Analyzing Resume with AI Models...";
+            btn.disabled = true;
+
+            const formData = new FormData();
+            formData.append('name', document.getElementById('name').value);
+            formData.append('college', document.getElementById('college').value);
+            formData.append('year', document.getElementById('year').value);
+            formData.append('department', document.getElementById('department').value);
+            formData.append('project_text', document.getElementById('project_text').value);
+
+            const resumeFile = document.getElementById('resume').files[0];
+            if (resumeFile) formData.append('resume', resumeFile);
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/analyze-resume', {
+                    method: 'POST',
+                    body: formData
+                });
+                globalResumeData = await response.json();
+
+                document.getElementById('resume-res-title').innerText = `${globalResumeData.name} (${globalResumeData.department}) - Resume Report`;
+                document.getElementById('res-resume-score').innerText = `${globalResumeData.resume_score}/100`;
+                document.getElementById('res-resume-gap').innerText = `-${globalResumeData.resume_gap}%`;
+                document.getElementById('res-target-company').innerText = globalResumeData.target_company;
+
+                document.getElementById('resumeMatchedSkills').innerHTML = globalResumeData.matched_skills.length > 0
+                    ? globalResumeData.matched_skills.map(s => `<span class="bg-emerald-950 text-emerald-300 px-3 py-1 rounded-full border border-emerald-800">${s}</span>`).join('')
+                    : '<span class="text-slate-500 italic">No core matches detected</span>';
+
+                document.getElementById('resumeMissingSkills').innerHTML = globalResumeData.missing_skills.length > 0
+                    ? globalResumeData.missing_skills.map(s => `<span class="bg-amber-950 text-amber-300 px-3 py-1 rounded-full border border-amber-800">${s}</span>`).join('')
+                    : '<span class="text-emerald-400 font-semibold">Zero Skill Gaps!</span>';
+
+                let recsDiv = document.getElementById('recommendationsList');
+                recsDiv.innerHTML = globalResumeData.recommendations.map(r => `
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 flex justify-between items-center">
+                        <div>
+                            <span class="text-xs font-semibold text-blue-400 uppercase tracking-wide">${r.platform}</span>
+                            <h4 class="text-white font-bold text-sm mt-0.5">${r.topic}</h4>
+                        </div>
+                        <a href="${r.link}" target="_blank" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition shadow-md">
+                            Watch / Learn ➔
+                        </a>
+                    </div>
+                `).join('');
+
+                goToStep(3);
+
+            } catch (err) {
+                alert("Error connecting to FastAPI backend. Ensure uvicorn is running!");
+            } finally {
+                btn.innerText = "Analyze My Resume ➔";
+                btn.disabled = false;
+            }
+        }
+
+        function submitAptitudeTest() {
+            let correctCount = 0;
+            let feedbackHTML = "";
+            questions.forEach((item, index) => {
+                let selected = document.querySelector(`input[name="q_${index}"]:checked`)?.value;
+                let isCorrect = selected === item.answer;
+                if (isCorrect) correctCount++;
+
+                feedbackHTML += `
+                    <div class="p-2 rounded bg-slate-900 border ${isCorrect ? 'border-emerald-800/50 text-emerald-300' : 'border-red-800/50 text-red-300'}">
+                        <strong>Q${index + 1}:</strong> ${item.q} <br>
+                        <span>Your Answer: <strong>${selected || 'Unanswered'}</strong> | Correct Answer: <strong class="text-white">${item.answer}</strong> (${isCorrect ? 'Correct ✓' : 'Incorrect ✗'})</span>
+                    </div>
+                `;
+            });
+
+            globalQuizScore = correctCount;
+            let finalCombinedScore = globalResumeData ? Math.round((globalResumeData.resume_score * 0.6) + (globalQuizScore * 4)) : (globalQuizScore * 10);
+
+            document.getElementById('res-quiz-score').innerText = `${globalQuizScore}/10`;
+            document.getElementById('res-final-combined').innerText = `${finalCombinedScore}/100`;
+            document.getElementById('quizFeedbackArea').innerHTML = feedbackHTML;
+
+            goToStep(5);
+        }
+    </script>
+</body>
+</html>
