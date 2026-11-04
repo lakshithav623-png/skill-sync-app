@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import requests
 from pypdf import PdfReader
 from sentence_transformers import SentenceTransformer, util
+import tempfile
 
 app = FastAPI(title="SKILLSYNC Backend", version="2.5")
 
@@ -19,7 +20,7 @@ app.add_middleware(
 )
 
 # Initialize SQLite Production Database
-DB_FILE = "skillsync_production.db"
+DB_FILE = os.path.join(tempfile.gettempdir(), "skillsync_production.db")
 
 def init_db():
     conn = sqlite3.connect(DB_FILE)
@@ -67,7 +68,7 @@ INDUSTRY_PROFILES = {
 
 # Dynamic YouTube API Course Fetcher
 def fetch_dynamic_youtube_course(skill_name):
-    api_key = "AIzaSyAeACrD6AQ_r5qlwaW9P2B_Wuh0CsJSNws"  # Replace with your actual copied Google Cloud API key
+    api_key = "my api key"  # Replace with your actual copied Google Cloud API key
     url = "https://www.googleapis.com/youtube/v3/search"
     params = {
         "part": "snippet",

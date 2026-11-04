@@ -305,49 +305,60 @@
         });
 
         function renderSpiderChart(matchScore, matchedCount, missingCount) {
-            const ctx = document.getElementById('spiderChart').getContext('2d');
+            if (typeof Chart === 'undefined') {
+                console.warn("Chart.js failed to load. Skipping radar chart.");
+                return;
+            }
+
+            const ctx = document.getElementById('spiderChart');
+            if (!ctx) return;
+
             if (radarChartInstance) radarChartInstance.destroy();
 
             const totalSkills = matchedCount + missingCount || 1;
             const proficiencyScore = Math.round((matchedCount / totalSkills) * 100);
 
-            radarChartInstance = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['Semantic Alignment', 'Core Skills Match', 'Aptitude Readiness', 'Industry Benchmark', 'Technical Depth'],
-                    datasets: [{
-                        label: 'Candidate Profile',
-                        data: [matchScore, proficiencyScore, 75, matchScore > 70 ? 85 : 55, 70],
-                        backgroundColor: 'rgba(45, 212, 191, 0.15)',
-                        borderColor: '#2dd4bf',
-                        borderWidth: 2,
-                        pointBackgroundColor: '#2dd4bf',
-                    }, {
-                        label: 'Industry Standard',
-                        data: [90, 90, 90, 90, 90],
-                        backgroundColor: 'rgba(139, 92, 246, 0.05)',
-                        borderColor: '#8b5cf6',
-                        borderWidth: 1,
-                        borderDash: [4, 4],
-                        pointBackgroundColor: '#8b5cf6',
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: {
-                            angleLines: { color: 'rgba(255, 255, 255, 0.05)' },
-                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                            pointLabels: { color: '#94a3b8', font: { family: 'JetBrains Mono', size: 10 } },
-                            ticks: { display: false, max: 100, min: 0 }
-                        }
+            try {
+                radarChartInstance = new Chart(ctx.getContext('2d'), {
+                    type: 'radar',
+                    data: {
+                        labels: ['Semantic Alignment', 'Core Skills Match', 'Aptitude Readiness', 'Industry Benchmark', 'Technical Depth'],
+                        datasets: [{
+                            label: 'Candidate Profile',
+                            data: [matchScore, proficiencyScore, 75, matchScore > 70 ? 85 : 55, 70],
+                            backgroundColor: 'rgba(45, 212, 191, 0.15)',
+                            borderColor: '#2dd4bf',
+                            borderWidth: 2,
+                            pointBackgroundColor: '#2dd4bf',
+                        }, {
+                            label: 'Industry Standard',
+                            data: [90, 90, 90, 90, 90],
+                            backgroundColor: 'rgba(139, 92, 246, 0.05)',
+                            borderColor: '#8b5cf6',
+                            borderWidth: 1,
+                            borderDash: [4, 4],
+                            pointBackgroundColor: '#8b5cf6',
+                        }]
                     },
-                    plugins: {
-                        legend: { labels: { color: '#94a3b8', font: { family: 'Inter', size: 10 } } }
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                angleLines: { color: 'rgba(255, 255, 255, 0.05)' },
+                                grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                                pointLabels: { color: '#94a3b8', font: { family: 'JetBrains Mono', size: 10 } },
+                                ticks: { display: false, max: 100, min: 0 }
+                            }
+                        },
+                        plugins: {
+                            legend: { labels: { color: '#94a3b8', font: { family: 'Inter', size: 10 } } }
+                        }
                     }
-                }
-            });
+                });
+            } catch (err) {
+                console.error("Radar Chart rendering error:", err);
+            }
         }
     </script>
 </body>
